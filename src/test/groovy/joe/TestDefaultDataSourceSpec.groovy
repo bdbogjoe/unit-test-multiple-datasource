@@ -3,7 +3,7 @@ package joe
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class TestSpec extends Specification implements DomainUnitTest<Test> {
+class TestDefaultDataSourceSpec extends Specification implements DomainUnitTest<TestDefaultDataSource> {
 
     def setup() {
     }
@@ -13,9 +13,9 @@ class TestSpec extends Specification implements DomainUnitTest<Test> {
 
     void "test save"() {
         setup:
-        new Test(name: 'myName').save()
+        new TestDefaultDataSource(name: 'myName').save()
 
         expect:
-        Test.count() > 0
+        TestDefaultDataSource.count() > 0
     }
 }
