@@ -5,6 +5,10 @@ import spock.lang.Specification
 
 class TestSpec extends Specification implements DomainUnitTest<Test> {
 
+    Closure doWithConfig() {{ config ->
+        config.yourDataSourceName = "DEFAULT"
+    }}
+
     def setup() {
     }
 
