@@ -1,28 +1,29 @@
 package joe
 
+import grails.test.hibernate.HibernateSpec
 import grails.testing.gorm.DomainUnitTest
-import org.grails.datastore.mapping.core.AbstractDatastore
-import org.grails.datastore.mapping.simple.SimpleMapDatastore
-import spock.lang.Specification
+import spock.lang.Unroll
 
-class TestSpec extends Specification implements DomainUnitTest<Test> {
+class TestSpec extends HibernateSpec implements DomainUnitTest<Test> {
 
-    def setup() {
-    }
 
     def cleanup() {
     }
 
-    void "test save"() {
-        setup:
-        new Test(name: 'myName').save(flush: true)
+    @Unroll("Test #nb")
+    void testSave() {
+        when:
+        for(cpt in nb) {
+            new Test(name: 'myName').save(flush: true)
+        }
 
-        expect:
-        Test.count() > 0
+        then:
+        Test.count() ==expected
+
+        where:
+        nb | expected
+        1  | 1
+        2  | 2
+
     }
-
-	@Override
-	AbstractDatastore getDataStore() {
-		return new SimpleMapDatastore(['myDataSource'], Test)
-	}
 }

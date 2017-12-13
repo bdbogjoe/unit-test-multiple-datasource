@@ -6,13 +6,6 @@ dataSource:
   username: sa
   password:
 dataSources:
-  main:
-      pooled: true
-      jmxExport: true
-      driverClassName: org.h2.Driver
-      username: sa
-      password:
-      dialect: org.hibernate.dialect.H2Dialect
   myDataSource:
         pooled: true
         jmxExport: false
