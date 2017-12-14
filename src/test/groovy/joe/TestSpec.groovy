@@ -1,10 +1,10 @@
 package joe
 
-import grails.test.hibernate.HibernateSpec
 import grails.testing.gorm.DomainUnitTest
+import spock.lang.Specification
 import spock.lang.Unroll
 
-class TestSpec extends HibernateSpec implements DomainUnitTest<Test> {
+class TestSpec extends Specification implements DomainUnitTest<Test> {
 
 
     def cleanup() {
@@ -13,12 +13,12 @@ class TestSpec extends HibernateSpec implements DomainUnitTest<Test> {
     @Unroll("Test #nb")
     void testSave() {
         when:
-        for(cpt in nb) {
+        for (int cpt = 0; cpt < nb; cpt++) {
             new Test(name: 'myName').save(flush: true)
         }
 
         then:
-        Test.count() ==expected
+        Test.count() == expected
 
         where:
         nb | expected
