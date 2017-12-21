@@ -37,5 +37,15 @@ class TestSpec extends Specification implements DataTest {
         then:
         !bean.validate()
     }
+
+    @Transactional(connection = 'myDataSource')
+    void testValidateWithTransactional() {
+        when:
+        def bean = new Test()
+
+        then:
+        !bean.validate()
+    }
+
 }
 
