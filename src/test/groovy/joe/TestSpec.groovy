@@ -7,7 +7,6 @@ import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class TestSpec extends Specification implements DataTest {
 
@@ -19,12 +18,9 @@ class TestSpec extends Specification implements DataTest {
     void testSave() {
         when:
         def bean = new Test(name: 'myName')
+        bean.save(flush:true)
 
         then:
-        bean.validate()
-        and:
-        bean.save()
-        and:
         Test.count() > 0
 
 
