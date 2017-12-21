@@ -1,11 +1,16 @@
 package joe
 
-import grails.testing.gorm.DomainUnitTest
+import grails.testing.gorm.DataTest
+import org.grails.datastore.mapping.core.connections.ConnectionSource
+import org.grails.datastore.mapping.simple.SimpleMapDatastore
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class TestSpec extends Specification implements DomainUnitTest<Test> {
+class TestSpec extends Specification implements DataTest {
 
+    @Shared @AutoCleanup SimpleMapDatastore dataStore = new SimpleMapDatastore([ConnectionSource.DEFAULT, "myDataSource"], Test)
 
     def cleanup() {
     }
@@ -23,7 +28,8 @@ class TestSpec extends Specification implements DomainUnitTest<Test> {
         where:
         nb | expected
         1  | 1
-        2  | 2
+        2  | 3
 
     }
 }
+
