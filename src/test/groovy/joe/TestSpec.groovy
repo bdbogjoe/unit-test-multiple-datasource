@@ -1,5 +1,6 @@
 package joe
 
+import grails.gorm.transactions.Transactional
 import grails.testing.gorm.DataTest
 import org.grails.datastore.mapping.core.connections.ConnectionSource
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
@@ -10,26 +11,31 @@ import spock.lang.Unroll
 
 class TestSpec extends Specification implements DataTest {
 
-    @Shared @AutoCleanup SimpleMapDatastore dataStore = new SimpleMapDatastore([ConnectionSource.DEFAULT, "myDataSource"], Test)
+    @Shared
+    @AutoCleanup
+    SimpleMapDatastore dataStore = new SimpleMapDatastore([ConnectionSource.DEFAULT, "myDataSource"], Test)
 
-    def cleanup() {
-    }
 
-    @Unroll("Test #nb")
     void testSave() {
         when:
-        for (int cpt = 0; cpt < nb; cpt++) {
-            new Test(name: 'myName').save(flush: true)
-        }
+        def bean = new Test(name: 'myName')
 
         then:
-        Test.count() == expected
+        bean.validate()
+        and:
+        bean.save()
+        and:
+        Test.count() > 0
 
-        where:
-        nb | expected
-        1  | 1
-        2  | 3
 
+    }
+
+    void testValidate() {
+        when:
+        def bean = new Test()
+
+        then:
+        !bean.validate()
     }
 }
 
