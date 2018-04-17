@@ -9,5 +9,6 @@ class Test {
     }
 
     static constraints = {
+        name nullable: false
     }
 }

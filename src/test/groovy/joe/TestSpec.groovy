@@ -26,6 +26,11 @@ class TestSpec extends Specification implements DataTest {
 
     }
 
+    void testConstraintsProperties(){
+        expect:
+        Test.constrainedProperties
+    }
+
     void testValidate() {
         when:
         def bean = new Test()

@@ -8,5 +8,6 @@ class TestDefaultDataSource {
     }
 
     static constraints = {
+        name nullable: false
     }
 }

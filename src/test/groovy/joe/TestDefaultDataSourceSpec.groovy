@@ -12,6 +12,11 @@ class TestDefaultDataSourceSpec extends Specification implements DomainUnitTest<
     def cleanup() {
     }
 
+    void testConstraintsProperties(){
+        expect:
+        TestDefaultDataSource.constrainedProperties
+    }
+
     void testSave() {
         when:
         def bean = new TestDefaultDataSource(name: 'myName')
