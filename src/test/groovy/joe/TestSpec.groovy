@@ -1,19 +1,31 @@
 package joe
 
 import grails.gorm.transactions.Transactional
-import grails.testing.gorm.DataTest
-import org.grails.datastore.mapping.core.connections.ConnectionSource
-import org.grails.datastore.mapping.simple.SimpleMapDatastore
-import spock.lang.AutoCleanup
-import spock.lang.Shared
+import grails.testing.gorm.DomainUnitTest
+import org.springframework.core.convert.converter.Converter
+import org.springframework.core.convert.support.ConfigurableConversionService
 import spock.lang.Specification
 
-class TestSpec extends Specification implements DataTest {
+class TestSpec extends Specification implements DomainUnitTest<Test> {
 
-    @Shared
-    @AutoCleanup
-    SimpleMapDatastore dataStore = new SimpleMapDatastore([ConnectionSource.DEFAULT, "myDataSource"], Test)
+    static{
+        System.setProperty("grails.gorm.connections", "myDataSource")
+    }
 
+    @Override
+    Closure doWithSpring() {
+        return {
+            ConfigurableConversionService conversionService = application.mainContext.getEnvironment().getConversionService()
+            conversionService.addConverter(new Converter<String, Map>() {
+                @Override
+                Map convert(String source) {
+                    source.split(",").collectEntries({
+                        [(it):it]
+                    })
+                }
+            })
+        }
+    }
 
     void testSave() {
         when:
